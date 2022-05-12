@@ -1,0 +1,40 @@
+server {
+	server_name rastreargratis.com.br;
+
+	root /var/www/logs-api;
+
+	proxy_buffering off;
+	proxy_intercept_errors on;
+
+
+	location / {
+		proxy_pass http://127.0.0.1:8082;
+	}
+
+	location /api {		
+       		fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+        	fastcgi_param SCRIPT_FILENAME /var/www/logs-api/index.php;
+        	include fastcgi_params;
+
+    		fastcgi_intercept_errors on;
+
+		error_page 405 = @traccar;
+	}
+
+	location @traccar{
+		proxy_pass http://127.0.0.1:8082;
+	}
+
+	# outra regra semelhante só pro websocket
+	location /api/socket {
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header Host $host;
+
+		proxy_pass http://127.0.0.1:8082;
+
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "upgrade";
+	}
+
+} 
