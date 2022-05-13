@@ -32,8 +32,9 @@
 	}
 
 	if($user){
-		DLOG($user,'['.date("d/m/Y H:i:s").'] '.$p.' -> '.$body);
+		DLOG($user,'['.date("d/m/Y H:i:s").'] '.$_SERVER[REQUEST_METHOD].' -> '.$p.' -> '.$body);
 	}
+
 	http_response_code(405);
 
 ?> 

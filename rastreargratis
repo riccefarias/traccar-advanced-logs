@@ -18,7 +18,7 @@ server {
 
     		fastcgi_intercept_errors on;
 
-		error_page 405 = @traccar;
+		    error_page 405 = @traccar;
 	}
 
 	location @traccar{

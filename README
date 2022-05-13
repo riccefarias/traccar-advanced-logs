@@ -1,0 +1,7 @@
+Instalar NGINX e PHP
+
+apt install -y nginx php-fpm
+
+
+Pasta do vhost: /etc/nginx/sites-enabled
+Pasta dos fontes: /var/www
